@@ -1,4 +1,5 @@
-﻿using Inscryption4thAnniversaryCardDisplays.Helpers.Loggers;
+﻿using Inscryption4thAnniversaryCardDisplays.Configuration;
+using Inscryption4thAnniversaryCardDisplays.Helpers.Loggers;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -21,25 +22,21 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 		/// <param name="httpClient">The HttpClient in which will be used to fetch the font.</param>
 		/// <returns>A list of Images to save.</returns>
 		/// This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.
-		public static List<Image<Rgba32>> CreateGrids(Dictionary<string, Image<Rgba32>> grids, List<string> displayNames, HttpClient httpClient)
+		public static List<Image<Rgba32>> CreateGrids(Dictionary<string, Image<Rgba32>> grids, List<string> displayNames, Config config)
 		{
 			List<Image<Rgba32>> filesToSendBack = new List<Image<Rgba32>>();
 
-			Task<Stream> fontFile = httpClient.GetStreamAsync("https://github.com/Chaosyr/KamWerksPortraitsAndOtherAssets/raw/refs/heads/main/heavyweight.ttf");
-
-			MemoryStream fontStream = new();
-			fontFile.Result.CopyTo(fontStream);
-			fontStream.Position = 0;
+			MemoryStream fontStream = new(config.fontFile);
 
 			FontCollection collection = new();
 			FontFamily family = collection.Add(fontStream);
-			Font contestSize = family.CreateFont(64, FontStyle.Regular);
-
-			RichTextOptions optionsContest = new(contestSize)
+			Font contestSize = family.CreateFont(config.EventNameSize, FontStyle.Regular);
+			
+			RichTextOptions optionsContest = new RichTextOptions(contestSize)
 			{
-				HorizontalAlignment = HorizontalAlignment.Left,
+				HorizontalAlignment = config.HorizontalAlignment,
 				VerticalAlignment = VerticalAlignment.Center,
-				Origin = new PointF(2685, 2131),
+				Origin = config.TextPosition,
 			};
 
 			Image<Rgba32> baseImage = Image.Load<Rgba32>(Path.Combine(DLLPath + "\\backgroundBase.png"));
@@ -53,7 +50,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 					baseImage.Mutate(img =>
 					{
 						img.DrawImage(grids[displayNames[iterator - 1]], new Point(0, 0), 1.0f);
-						img.DrawText(optionsContest, "Inscryption 4th Anniversary - Card Contest 2025", new Rgba32(255, 200, 0, 255));
+						img.DrawText(optionsContest, config.ContestName, config.TextColor);
 					});
 				}
 				else if (iterator % 4 == 2)

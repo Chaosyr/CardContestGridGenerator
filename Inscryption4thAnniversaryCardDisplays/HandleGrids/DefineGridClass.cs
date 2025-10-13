@@ -1,4 +1,5 @@
-﻿using Inscryption4thAnniversaryCardDisplays.Helpers;
+﻿using Inscryption4thAnniversaryCardDisplays.Configuration;
+using Inscryption4thAnniversaryCardDisplays.Helpers;
 using Inscryption4thAnniversaryCardDisplays.Helpers.Loggers;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
@@ -24,19 +25,16 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 		/// <param name="httpClient">The HttpClient in which the Font will be fetched from.</param>
 		/// <returns>Saved Grids</returns>
 		/// This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.
-		public static Dictionary<string, Image<Rgba32>> DefineGrids(List<string> displayNames, Dictionary<string, List<string>> entrys, Dictionary<string, string> socials, HttpClient httpClient)
+		public static Dictionary<string, Image<Rgba32>> DefineGrids(List<string> displayNames, Dictionary<string, List<string>> entrys, Dictionary<string, string> socials, Config config)
 		{
 			Dictionary<string, Image<Rgba32>> filesToSendBack = new Dictionary<string, Image<Rgba32>>();
-			Task<Stream> fontFile = httpClient.GetStreamAsync("https://github.com/Chaosyr/KamWerksPortraitsAndOtherAssets/raw/refs/heads/main/heavyweight.ttf");
 
-			MemoryStream fontStream = new();
-			fontFile.Result.CopyTo(fontStream);
-			fontStream.Position = 0;
+			MemoryStream fontStream = new(config.fontFile);
 
 			FontCollection collection = new();
 			FontFamily family = collection.Add(fontStream);
-			Font displayNameSize = family.CreateFont(128, FontStyle.Regular);
-			Font socialSize = family.CreateFont(50, FontStyle.Regular);
+			Font displayNameSize = family.CreateFont(config.DisplayNameSize, FontStyle.Regular);
+			Font socialSize = family.CreateFont(config.SocialNameSize, FontStyle.Regular);
 
 			RichTextOptions optionsDisplayName = new(displayNameSize)
 			{
@@ -60,8 +58,8 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 				
 				image.Mutate(img =>
 				{
-					img.DrawText(optionsDisplayName, displayName, new Rgba32(255, 200, 0, 255));
-					img.DrawText(optionsSocials, socials[displayName].Replace("N/A", ""), new Rgba32(255, 200, 0, 255));
+					img.DrawText(optionsDisplayName, displayName, config.TextColor);
+					img.DrawText(optionsSocials, socials[displayName].Replace("N/A", ""), config.TextColor);
 					
 					Image<Rgba32> entry1 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
 					Image<Rgba32> entry2 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));

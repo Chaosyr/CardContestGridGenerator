@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using Inscryption4thAnniversaryCardDisplays.Configuration;
+using Inscryption4thAnniversaryCardDisplays.Configuration.Helpers;
 using Inscryption4thAnniversaryCardDisplays.HandleGrids;
 using Inscryption4thAnniversaryCardDisplays.Helpers;
 using SixLabors.ImageSharp;
@@ -27,10 +29,11 @@ namespace Inscryption4thAnniversaryCardDisplays
 				NoStore = true,
 				MustRevalidate = true
 			};
-
-			Dictionary<string, Image<Rgba32>> grids = DefineGridClass.DefineGrids(displayNames, entrys, socials, HttpClient);
+			Config config = ConfigClass.LoadConfig(HttpClient);
+			
+			Dictionary<string, Image<Rgba32>> grids = DefineGridClass.DefineGrids(displayNames, entrys, socials, config);
 			(Dictionary<string, Image<Rgba32>> sortedGrids, List<string> sortedKeys) = SortGridsClass.SortGrids(grids, entrys);
-			List<Image<Rgba32>> filesToSave = CreateGridClass.CreateGrids(sortedGrids, sortedKeys, HttpClient);
+			List<Image<Rgba32>> filesToSave = CreateGridClass.CreateGrids(sortedGrids, sortedKeys, config);
 			SaveGridsToDiskClass.SaveGridsToDisk(filesToSave);
 		}
 	}
