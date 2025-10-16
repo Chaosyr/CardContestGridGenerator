@@ -22,7 +22,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 		/// <param name="displayNames">A list of the display names.</param>
 		/// <param name="entrys">A dictionary of a display name associated with a list of entry's.</param>
 		/// <param name="socials">A dictionary of the display name associated with their social(s).</param>
-		/// <param name="httpClient">The HttpClient in which the Font will be fetched from.</param>
+		/// <param name="config">The config in which will be used to fetch the font.</param>
 		/// <returns>Saved Grids</returns>
 		/// This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.
 		public static Dictionary<string, Image<Rgba32>> DefineGrids(List<string> displayNames, Dictionary<string, List<string>> entrys, Dictionary<string, string> socials, Config config)

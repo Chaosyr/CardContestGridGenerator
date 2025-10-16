@@ -29,8 +29,13 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration.Helpers
 			int displayNameSize = int.Parse(arrayOfText[5].Remove(0, 18));
 			int socialNameSize = int.Parse(arrayOfText[6].Remove(0, 17));
 			int eventNameSize = int.Parse(arrayOfText[7].Remove(0, 18));
-			
-			Config config = new Config(contestName, horizontalAlignment, r, g, b, a, width, height, fontUrl, httpClient, displayNameSize, socialNameSize, eventNameSize);
+			bool charity = false;
+			if (arrayOfText.Count >= 9)
+			{
+				charity = bool.Parse(arrayOfText[8].Remove(0, 10));
+			}
+
+			Config config = new Config(contestName, horizontalAlignment, r, g, b, a, width, height, fontUrl, httpClient, displayNameSize, socialNameSize, eventNameSize, charity);
 			return config;
 		}
 	}

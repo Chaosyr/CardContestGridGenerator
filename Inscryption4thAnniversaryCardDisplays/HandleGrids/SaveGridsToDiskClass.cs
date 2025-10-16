@@ -1,4 +1,5 @@
-﻿using SixLabors.ImageSharp;
+﻿using Inscryption4thAnniversaryCardDisplays.Helpers.Loggers;
+using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Reflection;
 
@@ -20,7 +21,9 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 			int fileCount = 0;
 			foreach (Image<Rgba32> image in images)
 			{
+				Logging.Log("SaveGridsToDisk", "Info", $"Grid {fileCount} saving Initialized.");
 				image.SaveAsPng(Path.Combine(FolderRootPath + $"\\image_{fileCount}.png"));
+				Logging.Log("SaveGridsToDisk", "Info", $"Grid {fileCount} saving Finished.");
 				fileCount++;
 			}
 		}

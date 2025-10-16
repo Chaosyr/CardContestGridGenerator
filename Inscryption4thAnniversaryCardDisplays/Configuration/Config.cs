@@ -18,6 +18,7 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		public int DisplayNameSize { get; set; }
 		public int SocialNameSize { get; set; }
 		public int EventNameSize  { get; set; }
+		public bool CharityContest { get; set; }
 
 		/// <summary>
 		/// Sets up the config
@@ -35,9 +36,10 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		/// <param name="displayNameSize">The font size for the displayed names.</param>
 		/// <param name="socialNameSize">The font size for the socials.</param>
 		/// <param name="eventNameSize">The font size of the Contest Name.</param>
+		/// <param name="charity">A bool resembling whether the contest images should show 4th year anniversary logos</param>
 		/// <returns>A setup config.</returns>
 		/// This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.
-		public Config(string contestName, string horizontalAlignment, int r, int g, int b, int a, int width, int height, string fontUrl, HttpClient httpClient, int displayNameSize, int socialNameSize, int eventNameSize)
+		public Config(string contestName, string horizontalAlignment, int r, int g, int b, int a, int width, int height, string fontUrl, HttpClient httpClient, int displayNameSize, int socialNameSize, int eventNameSize, bool charity = false)
 		{
 			ContestName = contestName;
 			if (horizontalAlignment == "Right")
@@ -52,6 +54,7 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 			DisplayNameSize = displayNameSize;
 			SocialNameSize = socialNameSize;
 			EventNameSize = eventNameSize;
+			CharityContest = charity;
 		}
 	}
 }
