@@ -89,7 +89,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 							img.DrawImage(stJude, new Point(3701, 2398), 1.0f);
 							img.DrawImage(QR, new Point(3750, 2782), 1.0f);
 							img.DrawImage(AnniversaryLogo, new Point(2422, 2), 1.0f);
-							img.DrawImage(STJudeText, new Point(5577, 2), 1.0f);
+							img.DrawImage(STJudeText, new Point(4566, 2), 1.0f);
 							img.DrawImage(DMG, new Point(2, 2), 1.0f);
 							img.DrawImage(Fanscryption, new Point(7194, 2), 1.0f);
 							img.Resize(4000, 2500, new TriangleResampler());
@@ -120,7 +120,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						img.DrawImage(stJude, new Point(3701, 2398), 1.0f);
 						img.DrawImage(QR, new Point(3750, 2782), 1.0f);
 						img.DrawImage(AnniversaryLogo, new Point(2422, 2), 1.0f);
-						img.DrawImage(STJudeText, new Point(5577, 2), 1.0f);
+						img.DrawImage(STJudeText, new Point(4566, 2), 1.0f);
 						img.DrawImage(DMG, new Point(2, 2), 1.0f);
 						img.DrawImage(Fanscryption, new Point(7194, 2), 1.0f);
 						img.Resize(4000, 2500, new TriangleResampler());
@@ -145,7 +145,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						img.DrawImage(stJude, new Point(3701, 2398), 1.0f);
 						img.DrawImage(QR, new Point(3750, 2782), 1.0f);
 						img.DrawImage(AnniversaryLogo, new Point(2422, 2), 1.0f);
-						img.DrawImage(STJudeText, new Point(5577, 2), 1.0f);
+						img.DrawImage(STJudeText, new Point(4566, 2), 1.0f);
 						img.DrawImage(DMG, new Point(2, 2), 1.0f);
 						img.DrawImage(Fanscryption, new Point(7194, 2), 1.0f);
 						img.Resize(4000, 2500, new TriangleResampler());
@@ -170,7 +170,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						img.DrawImage(stJude, new Point(3701, 2398), 1.0f);
 						img.DrawImage(QR, new Point(3750, 2782), 1.0f);
 						img.DrawImage(AnniversaryLogo, new Point(2422, 2), 1.0f);
-						img.DrawImage(STJudeText, new Point(5577, 2), 1.0f);
+						img.DrawImage(STJudeText, new Point(4566, 2), 1.0f);
 						img.DrawImage(DMG, new Point(2, 2), 1.0f);
 						img.DrawImage(Fanscryption, new Point(7194, 2), 1.0f);
 						img.Resize(4000, 2500, new TriangleResampler());
