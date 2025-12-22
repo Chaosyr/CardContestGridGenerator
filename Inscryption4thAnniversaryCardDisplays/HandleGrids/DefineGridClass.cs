@@ -15,6 +15,8 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 	{
 		public static Assembly Assembly = Assembly.GetExecutingAssembly();
 		public static string DLLPath = Path.GetDirectoryName(Assembly.Location);
+		public static string FolderRootPath = Path.GetFullPath(DLLPath + "\\MiniGrids");
+		public static int fileCount = 0;
 		
 		/// <summary>
 		/// Creates the grids for each DisplayName.
@@ -54,79 +56,355 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 			
 			foreach (string displayName in displayNames) {
 				Image<Rgba32> image = new Image<Rgba32>(1920, 1080);
-				int entryNum = entrys[displayName].Count;
-				
-				image.Mutate(img =>
+				if (config.FourGridDisplay == false)
 				{
-					img.DrawText(optionsDisplayName, displayName, config.TextColor);
-					img.DrawText(optionsSocials, socials[displayName].Replace("N/A", ""), config.TextColor);
-					
-					Image<Rgba32> entry1 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
-					Image<Rgba32> entry2 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
-					Image<Rgba32> entry3 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
-					
-					if (entryNum == 1)
+					int entryNum = (entrys[displayName].Count <= 3 ? entrys[displayName].Count : 3);
+					image.Mutate(img =>
 					{
-						entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
-					} else if (entryNum == 2)
-					{
-						entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
-						entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
-					} else if (entryNum == 3)
-					{
-						entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
-						entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
-						entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
-					}
+						img.DrawText(optionsDisplayName, displayName, config.TextColor);
+						img.DrawText(optionsSocials, socials[displayName].Replace("N/A", ""), config.TextColor);
 
-					if (entryNum == 1)
+						Image<Rgba32> entry1 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						Image<Rgba32> entry2 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						Image<Rgba32> entry3 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						bool entry1Boss = false;
+						bool entry2Boss = false;
+						bool entry3Boss = false;
+						float bossRatio = 766f / 533f;
+
+						if (entryNum == 1)
+						{
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+						}
+						else if (entryNum == 2)
+						{
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							float entry2ratio = (float)entry2.Width / entry2.Height;
+							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
+								entry2Boss = true;
+							}
+						}
+						else if (entryNum == 3)
+						{
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							float entry2ratio = (float)entry2.Width / entry2.Height;
+							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
+								entry2Boss = true;
+							}
+							entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
+							float entry3ratio = (float)entry3.Width / entry3.Height;
+							if (Math.Abs(entry3ratio - bossRatio) < 0.01f) {
+								entry3Boss = true;
+							}
+						}
+
+						if (entryNum == 1)
+						{
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 753 - 176 : 753), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+						}
+						else if (entryNum == 2)
+						{
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry2.Mutate(img2 =>
+							{
+								if (entry2Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 446 - 176 : 446), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry2, new Point((entry2Boss ? 1061 - 176 : 1061), (entry2Boss ? 251 + 23 : 251)), 1.0f);
+						}
+						else if (entryNum == 3)
+						{
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry2.Mutate(img2 =>
+							{
+								if (entry2Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry3.Mutate(img2 =>
+							{
+								if (entry3Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 138 - 176 : 138), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry2, new Point((entry2Boss ? 753 - 176 : 753), (entry2Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry3, new Point((entry3Boss ? 1368 - 176 : 1368), (entry3Boss ? 251 + 23 : 251)), 1.0f);
+						}
+					});
+				} else if (config.FourGridDisplay == true) {
+					int entryNum = (entrys[displayName].Count <= 4 ? entrys[displayName].Count : 4);
+					image = new Image<Rgba32>(2535, 1080);
+					image.Mutate(img =>
 					{
-						entry1.Mutate(img2 =>
-						{
-							img2.Resize(414, 579, new TriangleResampler());
-						});
+						Image<Rgba32> background = Image.Load<Rgba32>(Path.Combine(DLLPath, "MiniGridBG.png"));
+						img.DrawImage(background, new Point(0, 0), 1.0f);
 						
-						img.DrawImage(entry1, new Point(753, 251), 1.0f);
-					} else if (entryNum == 2)
-					{
-						entry1.Mutate(img2 =>
+						optionsDisplayName.Origin = new PointF(1267, 124);
+						optionsSocials.Origin = new PointF(1267, 957);
+						img.DrawText(optionsDisplayName, displayName, config.TextColor);
+						img.DrawText(optionsSocials, socials[displayName].Replace("N/A", ""), config.TextColor);
+
+						Image<Rgba32> entry1 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						Image<Rgba32> entry2 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						Image<Rgba32> entry3 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						Image<Rgba32> entry4 = Image.Load<Rgba32>(Path.Combine(DLLPath, "Grids-1.png"));
+						bool entry1Boss = false;
+						bool entry2Boss = false;
+						bool entry3Boss = false;
+						bool entry4Boss = false;
+						float bossRatio = 832f / 579f;
+
+						if (entryNum == 1)
 						{
-							img2.Resize(414, 579, new TriangleResampler());
-						});
-						
-						entry2.Mutate(img2 =>
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+						}
+						else if (entryNum == 2)
 						{
-							img2.Resize(414, 579, new TriangleResampler());
-						});
-						
-						img.DrawImage(entry1, new Point(446, 251), 1.0f);
-						img.DrawImage(entry2, new Point(1061, 251), 1.0f);
-					} else if (entryNum == 3)
-					{
-						entry1.Mutate(img2 =>
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							float entry2ratio = (float)entry2.Width / entry2.Height;
+							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
+								entry2Boss = true;
+							}
+						}
+						else if (entryNum == 3)
 						{
-							img2.Resize(414, 579, new TriangleResampler());
-						});
-						
-						entry2.Mutate(img2 =>
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							float entry2ratio = (float)entry2.Width / entry2.Height;
+							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
+								entry2Boss = true;
+							}
+							entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
+							float entry3ratio = (float)entry3.Width / entry3.Height;
+							if (Math.Abs(entry3ratio - bossRatio) < 0.01f) {
+								entry3Boss = true;
+							}
+						}
+						else if (entryNum == 4)
 						{
-							img2.Resize(414, 579, new TriangleResampler());
-						});
-						
-						entry3.Mutate(img2 =>
+							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							float entry1ratio = (float)entry1.Width / entry1.Height;
+							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
+								entry1Boss = true;
+							}
+							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							float entry2ratio = (float)entry2.Width / entry2.Height;
+							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
+								entry2Boss = true;
+							}
+							entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
+							float entry3ratio = (float)entry3.Width / entry3.Height;
+							if (Math.Abs(entry3ratio - bossRatio) < 0.01f) {
+								entry3Boss = true;
+							}
+							entry4 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_4.png"));
+							float entry4ratio = (float)entry4.Width / entry4.Height;
+							if (Math.Abs(entry4ratio - bossRatio) < 0.01f) {
+								entry4Boss = true;
+							}
+						}
+
+						if (entryNum == 1)
 						{
-							img2.Resize(414, 579, new TriangleResampler());
-						});
-						
-						img.DrawImage(entry1, new Point(138, 251), 1.0f);
-						img.DrawImage(entry2, new Point(753, 251), 1.0f);
-						img.DrawImage(entry3, new Point(1368, 251), 1.0f);
-					}
-				});
-				
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 1060 - 176 : 1060), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+						}
+						else if (entryNum == 2)
+						{
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry2.Mutate(img2 =>
+							{
+								if (entry2Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 753 - 176 : 753), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry2, new Point((entry2Boss ? 1368 - 176 : 1368), (entry2Boss ? 251 + 23 : 251)), 1.0f);
+						}
+						else if (entryNum == 3)
+						{
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry2.Mutate(img2 =>
+							{
+								if (entry2Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry3.Mutate(img2 =>
+							{
+								if (entry3Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 445 - 176 : 445), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry2, new Point((entry2Boss ? 1060 - 176 : 1060), (entry2Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry3, new Point((entry3Boss ? 1675 - 176 : 1675), (entry3Boss ? 251 + 23 : 251)), 1.0f);
+						} else if (entryNum == 4)
+						{
+							entry1.Mutate(img2 =>
+							{
+								if (entry1Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry2.Mutate(img2 =>
+							{
+								if (entry2Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							entry3.Mutate(img2 =>
+							{
+								if (entry3Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+							
+							entry4.Mutate(img2 =>
+							{
+								if (entry4Boss) {
+									img2.Resize(766, 533, new TriangleResampler());
+								}
+								else {
+									img2.Resize(414, 579, new TriangleResampler());
+								}
+							});
+
+							img.DrawImage(entry1, new Point((entry1Boss ? 138 - 176 : 138), (entry1Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry2, new Point((entry2Boss ? 753 - 176 : 753), (entry2Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry3, new Point((entry3Boss ? 1368 - 176 : 1368), (entry3Boss ? 251 + 23 : 251)), 1.0f);
+							img.DrawImage(entry4, new Point((entry4Boss ? 1983 - 176 : 1983), (entry4Boss ? 251 + 23 : 251)), 1.0f);
+						}
+					});
+				}
+
 				Logging.Log("DefineGrid", "Info", $"Added Grid For; {displayName}");
+				if (config.SingularDisplay) {
+					image.SaveAsPng(Path.Combine(FolderRootPath + $"\\image_{fileCount}.png"));
+				}
 				filesToSendBack.Add(displayName, image.Clone());
 				image.Dispose();
+				fileCount++;
 			}
 			return filesToSendBack;
 		}

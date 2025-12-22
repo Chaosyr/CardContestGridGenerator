@@ -19,6 +19,8 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		public int SocialNameSize { get; set; }
 		public int EventNameSize  { get; set; }
 		public bool CharityContest { get; set; }
+        public bool SingularDisplay { get; set; }
+        public bool FourGridDisplay { get; set; }
 
 		/// <summary>
 		/// Sets up the config
@@ -37,9 +39,11 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		/// <param name="socialNameSize">The font size for the socials.</param>
 		/// <param name="eventNameSize">The font size of the Contest Name.</param>
 		/// <param name="charity">A bool resembling whether the contest images should show 4th year anniversary logos</param>
+		/// <param name="miniGrids">A bool resembling whether the contest images should display just the minigrid rather than the mega grids, this will stop the rest from happening to only save minigrids</param>
+		/// <param name="fourGrids">A bool resembling whether the contest images should be of 4 entries, this goes with `miniGrids` only in present</param>
 		/// <returns>A setup config.</returns>
 		/// This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.
-		public Config(string contestName, string horizontalAlignment, int r, int g, int b, int a, int width, int height, string fontUrl, HttpClient httpClient, int displayNameSize, int socialNameSize, int eventNameSize, bool charity = false)
+		public Config(string contestName, string horizontalAlignment, int r, int g, int b, int a, int width, int height, string fontUrl, HttpClient httpClient, int displayNameSize, int socialNameSize, int eventNameSize, bool charity = false, bool miniGrids = false, bool fourGrids = false)
 		{
 			ContestName = contestName;
 			if (horizontalAlignment == "Right")
@@ -55,6 +59,8 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 			SocialNameSize = socialNameSize;
 			EventNameSize = eventNameSize;
 			CharityContest = charity;
+			SingularDisplay = miniGrids;
+			FourGridDisplay = fourGrids;
 		}
 	}
 }

@@ -32,9 +32,12 @@ namespace Inscryption4thAnniversaryCardDisplays
 			Config config = ConfigClass.LoadConfig(HttpClient);
 			
 			Dictionary<string, Image<Rgba32>> grids = DefineGridClass.DefineGrids(displayNames, entrys, socials, config);
-			(Dictionary<string, Image<Rgba32>> sortedGrids, List<string> sortedKeys) = SortGridsClass.SortGrids(grids, entrys);
-			List<Image<Rgba32>> filesToSave = CreateGridClass.CreateGrids(sortedGrids, sortedKeys, config);
-			SaveGridsToDiskClass.SaveGridsToDisk(filesToSave);
+			if (!config.SingularDisplay)
+			{
+				(Dictionary<string, Image<Rgba32>> sortedGrids, List<string> sortedKeys) = SortGridsClass.SortGrids(grids, entrys);
+				List<Image<Rgba32>> filesToSave = CreateGridClass.CreateGrids(sortedGrids, sortedKeys, config);
+				SaveGridsToDiskClass.SaveGridsToDisk(filesToSave);
+			}
 		}
 	}
 }
