@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using Inscryption4thAnniversaryCardDisplays.Configuration;
+﻿using Inscryption4thAnniversaryCardDisplays.Configuration;
 using Inscryption4thAnniversaryCardDisplays.Configuration.Helpers;
 using Inscryption4thAnniversaryCardDisplays.HandleGrids;
 using Inscryption4thAnniversaryCardDisplays.Helpers;

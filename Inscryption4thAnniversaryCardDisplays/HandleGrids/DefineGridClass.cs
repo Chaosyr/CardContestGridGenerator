@@ -56,10 +56,11 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 			
 			foreach (string displayName in displayNames) {
 				Image<Rgba32> image = new Image<Rgba32>(1920, 1080);
+				List<string> fileEntrys = entrys[displayName];
 				if (config.FourGridDisplay == false)
 				{
 					int entryNum = (entrys[displayName].Count <= 3 ? entrys[displayName].Count : 3);
-					image.Mutate(img =>
+					image.Mutate<Rgba32>(img =>
 					{
 						img.DrawText(optionsDisplayName, displayName, config.TextColor);
 						img.DrawText(optionsSocials, socials[displayName].Replace("N/A", ""), config.TextColor);
@@ -74,7 +75,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 
 						if (entryNum == 1)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
@@ -82,12 +83,12 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						}
 						else if (entryNum == 2)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
 							}
-							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							entry2 = Image.Load<Rgba32>(fileEntrys[1]);
 							float entry2ratio = (float)entry2.Width / entry2.Height;
 							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
 								entry2Boss = true;
@@ -95,17 +96,17 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						}
 						else if (entryNum == 3)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
 							}
-							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							entry2 = Image.Load<Rgba32>(fileEntrys[1]);
 							float entry2ratio = (float)entry2.Width / entry2.Height;
 							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
 								entry2Boss = true;
 							}
-							entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
+							entry3 = Image.Load<Rgba32>(fileEntrys[2]);
 							float entry3ratio = (float)entry3.Width / entry3.Height;
 							if (Math.Abs(entry3ratio - bossRatio) < 0.01f) {
 								entry3Boss = true;
@@ -191,7 +192,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 				} else if (config.FourGridDisplay == true) {
 					int entryNum = (entrys[displayName].Count <= 4 ? entrys[displayName].Count : 4);
 					image = new Image<Rgba32>(2535, 1080);
-					image.Mutate(img =>
+					image.Mutate<Rgba32>(img =>
 					{
 						Image<Rgba32> background = Image.Load<Rgba32>(Path.Combine(DLLPath, "MiniGridBG.png"));
 						img.DrawImage(background, new Point(0, 0), 1.0f);
@@ -213,7 +214,7 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 
 						if (entryNum == 1)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
@@ -221,12 +222,12 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						}
 						else if (entryNum == 2)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
 							}
-							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							entry2 = Image.Load<Rgba32>(fileEntrys[1]);
 							float entry2ratio = (float)entry2.Width / entry2.Height;
 							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
 								entry2Boss = true;
@@ -234,17 +235,17 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						}
 						else if (entryNum == 3)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
 							}
-							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							entry2 = Image.Load<Rgba32>(fileEntrys[1]);
 							float entry2ratio = (float)entry2.Width / entry2.Height;
 							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
 								entry2Boss = true;
 							}
-							entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
+							entry3 = Image.Load<Rgba32>(fileEntrys[2]);
 							float entry3ratio = (float)entry3.Width / entry3.Height;
 							if (Math.Abs(entry3ratio - bossRatio) < 0.01f) {
 								entry3Boss = true;
@@ -252,22 +253,22 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 						}
 						else if (entryNum == 4)
 						{
-							entry1 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_1.png"));
+							entry1 = Image.Load<Rgba32>(fileEntrys[0]);
 							float entry1ratio = (float)entry1.Width / entry1.Height;
 							if (Math.Abs(entry1ratio - bossRatio) < 0.01f) {
 								entry1Boss = true;
 							}
-							entry2 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_2.png"));
+							entry2 = Image.Load<Rgba32>(fileEntrys[1]);
 							float entry2ratio = (float)entry2.Width / entry2.Height;
 							if (Math.Abs(entry2ratio - bossRatio) < 0.01f) {
 								entry2Boss = true;
 							}
-							entry3 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_3.png"));
+							entry3 = Image.Load<Rgba32>(fileEntrys[2]);
 							float entry3ratio = (float)entry3.Width / entry3.Height;
 							if (Math.Abs(entry3ratio - bossRatio) < 0.01f) {
 								entry3Boss = true;
 							}
-							entry4 = Image.Load<Rgba32>(Path.Combine(ReadFoldersClass.FolderRootPath + $"\\{displayName.Replace('/', '$')}" + "\\Entry_4.png"));
+							entry4 = Image.Load<Rgba32>(fileEntrys[3]);
 							float entry4ratio = (float)entry4.Width / entry4.Height;
 							if (Math.Abs(entry4ratio - bossRatio) < 0.01f) {
 								entry4Boss = true;
