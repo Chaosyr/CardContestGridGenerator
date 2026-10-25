@@ -31,7 +31,14 @@ namespace Inscryption4thAnniversaryCardDisplays.HandleGrids
 		{
 			Dictionary<string, Image<Rgba32>> filesToSendBack = new Dictionary<string, Image<Rgba32>>();
 
-			MemoryStream fontStream = new(config.fontFile);
+			MemoryStream fontStream = new MemoryStream();
+			if (config.FontFile != null)
+				fontStream = new(config.FontFile);
+			else
+			{
+				byte[] fontBytes = File.ReadAllBytes(config.FontLocal);
+				fontStream = new MemoryStream(fontBytes);
+			}
 
 			FontCollection collection = new();
 			FontFamily family = collection.Add(fontStream);

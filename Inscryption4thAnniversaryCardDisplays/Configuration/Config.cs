@@ -14,7 +14,8 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		public HorizontalAlignment HorizontalAlignment { get; set; }
 		public Rgba32 TextColor { get; set; }
 		public PointF TextPosition { get; set; }
-		public byte[] fontFile { get; set; }
+		public byte[] FontFile { get; set; }
+		public string FontLocal { get; set; }
 		public int DisplayNameSize { get; set; }
 		public int SocialNameSize { get; set; }
 		public int EventNameSize  { get; set; }
@@ -34,6 +35,7 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		/// <param name="width">The X coordinate of the Contest Names position.</param>
 		/// <param name="height">The Y coordinate of the Contest Names position.</param>
 		/// <param name="fontUrl">The fonts URL</param>
+		/// <param name="fontPath">A Local Font File used as a Backup Case.</param>
 		/// <param name="httpClient">The HTTPClient in which will be used to load the font.</param>
 		/// <param name="displayNameSize">The font size for the displayed names.</param>
 		/// <param name="socialNameSize">The font size for the socials.</param>
@@ -43,7 +45,7 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 		/// <param name="fourGrids">A bool resembling whether the contest images should be of 4 entries, this goes with `miniGrids` only in present</param>
 		/// <returns>A setup config.</returns>
 		/// This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.
-		public Config(string contestName, string horizontalAlignment, int r, int g, int b, int a, int width, int height, string fontUrl, HttpClient httpClient, int displayNameSize, int socialNameSize, int eventNameSize, bool charity = false, bool miniGrids = false, bool fourGrids = false)
+		public Config(string contestName, string horizontalAlignment, int r, int g, int b, int a, int width, int height, string fontUrl, string fontPath, HttpClient httpClient, int displayNameSize, int socialNameSize, int eventNameSize, bool charity = false, bool miniGrids = false, bool fourGrids = false)
 		{
 			ContestName = contestName;
 			if (horizontalAlignment == "Right")
@@ -54,7 +56,15 @@ namespace Inscryption4thAnniversaryCardDisplays.Configuration
 				HorizontalAlignment = HorizontalAlignment.Center;
 			TextColor = new Rgba32(r, g, b, a);
 			TextPosition = new PointF(width, height);
-			fontFile = httpClient.GetByteArrayAsync(fontUrl).Result;
+			try
+			{
+				FontFile = httpClient.GetByteArrayAsync(fontUrl).Result;
+			}
+			catch
+			{
+				FontFile = null;
+				FontLocal = fontPath;
+			}
 			DisplayNameSize = displayNameSize;
 			SocialNameSize = socialNameSize;
 			EventNameSize = eventNameSize;

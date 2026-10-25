@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Inscryption4thAnniversaryCardDisplays.Helpers.Loggers;
+using System.Linq;
 namespace Inscryption4thAnniversaryCardDisplays.Helpers
 {
 	public static class ReadFoldersClass
@@ -17,19 +18,29 @@ namespace Inscryption4thAnniversaryCardDisplays.Helpers
 		{
 			List<string> displayNames = new List<string>();
 			Dictionary<string, List<string>> entrys = new Dictionary<string, List<string>>();
-			
-			foreach (string subPath in Directory.GetDirectories(Path.GetFullPath(FolderRootPath)))
+
+			var sortedDirectories = Directory.GetDirectories(Path.GetFullPath(FolderRootPath))
+				.OrderBy(path => 
+				{
+					string cleanName = Path.GetFileName(path).Replace('$', '/').Replace('⁚', ':');
+					return System.Text.RegularExpressions.Regex.Replace(cleanName, @"\d+", match => match.Value.PadLeft(20, '0'));
+				}, StringComparer.OrdinalIgnoreCase);
+
+			foreach (string subPath in sortedDirectories)
 			{
-				displayNames.Add(Path.GetFileName(subPath).Replace('$', '/'));
+				displayNames.Add(Path.GetFileName(subPath).Replace('$', '/').Replace('⁚', ':'));
 				Logging.Log("ReadFolders", "Info", $"Subfolder Found in {Path.GetFileName(FolderRootPath)}; {subPath}");
 				List<string> files = new List<string>();
-				foreach (string file in Directory.GetFiles(Path.GetFullPath(subPath)))
+				var sortedFiles = Directory.GetFiles(Path.GetFullPath(subPath))
+					.OrderBy(filePath => System.Text.RegularExpressions.Regex.Replace(Path.GetFileName(filePath), @"\d+", match => match.Value.PadLeft(20, '0')), StringComparer.OrdinalIgnoreCase)
+					.ToList();
+
+				foreach (string file in sortedFiles)
 				{
-					files.Add(file);
 					Logging.Log("ReadFolders", "Info", $"File Found in {Path.GetFileName(subPath)}; {file}");
 				}
-				
-				entrys.Add(Path.GetFileName(subPath).Replace('$', '/'), files);
+    
+				entrys.Add(Path.GetFileName(subPath).Replace('$', '/').Replace('⁚', ':'), sortedFiles);
 			}
 			return (displayNames, entrys);
 		}
